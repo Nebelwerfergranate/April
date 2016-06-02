@@ -4,10 +4,12 @@ var express = require("express");
 var app = express();
 
 var mysql = require('mysql');
-var dbConfig = require("../private/dbConfig");
-var connection = null;
 
-handleDisconnect();
+var connection = null;
+var dbConfig = getDbConfig();
+
+console.dir(dbConfig);
+//handleDisconnect();
 
 var PORT = process.env.PORT || 3000;
 
@@ -18,14 +20,32 @@ app.listen(PORT, function () {
 });
 
 app.get('/', function (request, response) {
-    connection.query('SELECT * from Persons', function (err, rows, fields) {
-        if (err) {
-            console.log('error: ', err);
-            throw err;
-        }
-        response.send(['Hello World!!!!', rows]);
-    });
+    //connection.query('SELECT * from Persons', function (err, rows, fields) {
+    //    if (err) {
+    //        console.log('error: ', err);
+    //        throw err;
+    //    }
+    //    response.send(['Hello World!!!!', rows, ]);
+    //});
+    response.send(dbConfig.host);
 });
+
+function getDbConfig(){
+    var dbConfig = null;
+    var ISLOCAL = process.env.ISLOCAL || false;
+
+    if(ISLOCAL){
+        dbConfig = require("../private/dbConfig");
+    } else{
+        dbConfig = {
+            host: process.env.HOST//,
+            //user: process.env.USER,
+            //password: process.env.PASSWORD,
+            //database: process.env.DATABASE
+        };
+    }
+    return dbConfig;
+}
 
 function handleDisconnect() {
     console.log('1. connecting to db:');
