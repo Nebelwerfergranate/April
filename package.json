@@ -1,0 +1,18 @@
+{
+  "name": "april",
+  "version": "1.0.0",
+  "description": "My web dictionary",
+  "main": "server/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "node",
+    "mySql"
+  ],
+  "author": "Vitalii Diachenko",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.13.4"
+  }
+}
