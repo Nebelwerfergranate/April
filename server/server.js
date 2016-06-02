@@ -9,7 +9,7 @@ var connection = null;
 var dbConfig = getDbConfig();
 
 console.dir(dbConfig);
-//handleDisconnect();
+handleDisconnect();
 
 var PORT = process.env.PORT || 3000;
 
@@ -20,14 +20,13 @@ app.listen(PORT, function () {
 });
 
 app.get('/', function (request, response) {
-    //connection.query('SELECT * from Persons', function (err, rows, fields) {
-    //    if (err) {
-    //        console.log('error: ', err);
-    //        throw err;
-    //    }
-    //    response.send(['Hello World!!!!', rows, ]);
-    //});
-    response.send(dbConfig.host);
+    connection.query('SELECT * from Persons', function (err, rows, fields) {
+        if (err) {
+            console.log('error: ', err);
+            throw err;
+        }
+        response.send(['Hello World!!!!', rows, ]);
+    });
 });
 
 function getDbConfig(){
@@ -38,10 +37,10 @@ function getDbConfig(){
         dbConfig = require("../private/dbConfig");
     } else{
         dbConfig = {
-            host: process.env.HOST//,
-            //user: process.env.USER,
-            //password: process.env.PASSWORD,
-            //database: process.env.DATABASE
+            host: process.env.HOST,
+            user: process.env.USER,
+            password: process.env.PASSWORD,
+            database: process.env.DATABASE
         };
     }
     return dbConfig;
